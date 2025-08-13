@@ -18,6 +18,8 @@
       height: 100%;
       display: block;
     }
+    /* Optional: hide scrollbar if any */
+    ::-webkit-scrollbar { width: 0; height: 0; }
   </style>
 </head>
 <body>
@@ -31,7 +33,8 @@
         const shader = gl.createShader(type);
         gl.shaderSource(shader, source);
         gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPPILE_STATUS)) {
+        // FIXED typo here: COMPILE_STATUS
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
           console.error('Shader compilation error:', gl.getShaderInfoLog(shader));
           return null;
         }
