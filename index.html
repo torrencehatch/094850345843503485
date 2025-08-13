@@ -1035,7 +1035,71 @@
     padding: 10px 0;
   }
 }
-</style></head>
+</style>
+<!-- Mobile polish overrides (non-desktop; safe to paste at end of <head>) -->
+<style>
+  /* Respect iOS safe areas and keep header readable without adding a background */
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden; }
+    .header { padding-top: env(safe-area-inset-top, 0); }
+    .header__inner { padding: 0 12px; }
+    .header__row.logo-only { padding: 12px 0 4px 0; }
+    .header__row.lower { padding: 0 0 6px 0; }
+
+    /* Scale the logo fluidly so long names don't wrap weird */
+    .fuzzy-text {
+      font-size: clamp(1.5rem, 8vw, 2.2rem);
+      letter-spacing: 1.5px;
+    }
+
+    /* Make nav wrap neatly into two lines if needed; keep center alignment */
+    .header__links-list {
+      flex-wrap: wrap;
+      gap: 12px 14px;        /* row-gap col-gap */
+      justify-content: center;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 4px;
+    }
+
+    .header__links-list a {
+      font-size: 13px;
+      line-height: 1.2;
+      padding: 8px 2px;      /* tighter vertical rhythm, small horizontal tap targets */
+      display: inline-block;
+    }
+
+    /* Thinner underline so it matches the smaller type size */
+    .header__links-list a::after {
+      height: 1px;
+    }
+
+    /* Prevent hover "jump" from shifting layout on tap */
+    .header__links-list a:hover {
+      transform: none;
+    }
+
+    /* Improve scrollability if links overflow on extra-small screens */
+    .header__links {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Space below header so it doesn't feel cramped against top of the canvas */
+    main { padding-top: 8px; }
+  }
+
+  /* Extra-small tweaks for ~375px and below */
+  @media (max-width: 400px) {
+    .header__links-list { gap: 8px 10px; }
+    .header__links-list a { font-size: 12px; }
+  }
+
+  /* Respect user's motion preferences to reduce GPU/CPU churn on mobile */
+  @media (prefers-reduced-motion: reduce) {
+    .fuzzy-text { animation: none !important; }
+  }
+</style>
+</head>
 <body>
 <!-- Sticky header replicated from merch look -->
 <header class="header">
